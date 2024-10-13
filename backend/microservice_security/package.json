@@ -1,5 +1,5 @@
 {
-  "name": "microservicio-seguridad",
+  "name": "microservice_security",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
