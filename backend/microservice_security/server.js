@@ -1,5 +1,6 @@
-const Hapi = require('@hapi/hapi');
-const connection = require('./connection/connect'); // Importa la conexión
+const Hapi = require('@hapi/hapi'); // Importar Hapi
+const connection = require('./connection/connect'); // Importar la conexión
+const securityRoutes = require('./routes/securityRoutes'); // Importar las rutas
 
 const init = async () => {
     const server = Hapi.server({
@@ -7,7 +8,7 @@ const init = async () => {
         host: 'localhost'
     });
 
-    // Define tus rutas aquí
+    server.route(securityRoutes); // Registrar las rutas de Prueba
 
     await server.start();
     console.log('Servidor corriendo en %s', server.info.uri);

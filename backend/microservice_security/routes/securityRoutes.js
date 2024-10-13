@@ -1,8 +1,11 @@
+const connection = require('../connection/connect'); // Ajusta la ruta según tu estructura de archivos
+
 module.exports = [
   {
     method: 'POST',
     path: '/generar-token',
     handler: (request, h) => {
+      // Generar un token aleatorio de 8 dígitos
       const token = Math.floor(10000000 + Math.random() * 90000000).toString();
 
       // Insertar el token en la base de datos
@@ -17,16 +20,18 @@ module.exports = [
   {
     method: 'POST',
     path: '/validar-token',
-    handler: (request, h) => {
+    handler: async (request, h) => {
       const { token } = request.payload;
 
-      return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM tokens WHERE token = ?', [token], (err, results) => {
-          if (err) return reject(err);
-          const isValid = results.length > 0;
-          resolve({ isValid });
-        });
-      });
+      try {
+        const [results] = await connection.promise().query('SELECT * FROM tokens WHERE token = ?', [token]);
+        const isValid = results.length > 0;
+        return h.response({ isValid }).code(200);
+      } catch (err) {
+        console.error('Error al validar el token:', err);
+        return h.response({ error: 'Error interno del servidor' }).code(500);
+      }
     }
   }
+
 ];
