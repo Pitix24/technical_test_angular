@@ -1,6 +1,5 @@
-const Hapi = require('@hapi/hapi'); // Importar Hapi
-const connection = require('./connection/connect'); // Importar la conexión
-const securityRoutes = require('./routes/securityRoutes'); // Importar las rutas
+import Hapi from '@hapi/hapi'; // Importar Hapi
+import securityRoutes from './src/routes/securityRoutes'; // Importar las rutas
 
 const init = async () => {
     const server = Hapi.server({

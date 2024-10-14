@@ -1,6 +1,6 @@
-const connection = require('../connection/connect'); // Ajusta la ruta según tu estructura de archivos
+import connection from '../connection/connect'; // Importar la conexión
 
-module.exports = [
+export const securityRoutes = [ // Definir las rutas
   {
     method: 'POST',
     path: '/generar-token',

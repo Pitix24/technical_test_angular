@@ -1,0 +1,9 @@
+version: "2.1"
+services:
+  main:
+    image: redis:5
+    labels:
+      svc: "live.redis"
+    restart: always
+    ports:
+      - "6379"
