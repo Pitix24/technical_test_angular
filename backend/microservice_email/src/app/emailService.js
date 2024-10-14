@@ -1,3 +1,5 @@
+import { validateEmail } from "../infraestructure/Schemes/mail.js";
+
 export class EmailService {
     constructor(rabbitService, mysqlRepository) {
         this.rabbitService = rabbitService;
@@ -5,12 +7,12 @@ export class EmailService {
     }
 
     proccessMessage = async (msg) => {
-        const validationResult = validateEmail(msg)
-
-        if (!validationResult.success) return validationResult.error
-
-        const { email_id_client, email } = validationResult.data;
-        await this.mysqlRepository.save({ email_id_client, email })
+        await this.mysqlRepository.save({
+            email_id_client: msg.email_id_client,
+            email: msg.email
+        })
         console.log('Correo registrado en la base de datos :D');
     }
+
+    
 }

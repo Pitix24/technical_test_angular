@@ -25,15 +25,19 @@ export class RabbitService {
     }
 
     async connect() {
-        const label = `${this.rabbitSettings.protocol}://${this.rabbitSettings.username}:${this.rabbitSettings.password}@${this.rabbitSettings.hostname}`
-        this.consumer = await this.amqp.connect(label);
-        this.chl = await this.consumer.createChannel();
-        await this.chl.assertQueue(this.queue);
+        try {
+            const label = `${this.rabbitSettings.protocol}://${this.rabbitSettings.username}:${this.rabbitSettings.password}@${this.rabbitSettings.hostname}`;
+            this.consumer = await this.amqp.connect(label);
+            this.chl = await this.consumer.createChannel();
+            await this.chl.assertQueue(this.queue);
+        } catch (error) {
+            console.error(`Error al conectar a la cola: ${error.message}`);
+        }
     }
 
     async runConsumer(callback) {
         await this.connect();
-
+        
         try {
             this.chl.consume(this.queue, (message) => {
                 if (message === null) {
@@ -42,6 +46,7 @@ export class RabbitService {
                 }
 
                 const msg = JSON.parse(message.content.toString());
+                
                 this.chl.ack(message)
                 callback(msg)
             });
@@ -50,7 +55,7 @@ export class RabbitService {
             console.error('Error consuming message:', error.message);
             throw error;
         }
-    }
+    }                                                                                                                                                                                                                                       
 
     async closeConnect() {
         await this.consumer.close();
