@@ -12,7 +12,7 @@ services:
       - 15672:15672
     environment:
       - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS="ITpg`01M[ls94l7xWD?n94hb0SL|r)"
+      - RABBITMQ_DEFAULT_PASS=DpJECug+Ab24
     command: >
       sh -c "rabbitmq-plugins enable rabbitmq_management && rabbitmq-server"
     networks:
