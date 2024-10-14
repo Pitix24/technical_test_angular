@@ -38,24 +38,16 @@ export class TokenRepository {
     }
 
     async validate({ idToken }) {
-        const querySelect = 'SELECT id_security_token, used FROM Security_Token WHERE id_security_token = ?';
-        const queryUpdate = 'UPDATE Security_Token SET used = 1 WHERE id_security_token = ?';
-
+        const querySelect = 'SELECT id_token FROM tokens WHERE token = ?';
         try {
             const [token] = await this.pool.query(querySelect, [idToken]);
 
             if (token.length > 0) {
-                const used = token[0].used
-                if (used === 1) {
-                    console.log('Invalid token');
-                    return false
-                }
-
-                await this.pool.query(queryUpdate, [idToken])
                 console.log('Valid token')
                 return true
+                
             } else {
-                console.log('There is not token')
+                console.log('This is NOT a Valid Token')
                 return false
             }
 

@@ -12,8 +12,9 @@ export class TokenService {
         return token;
     }
 
-    async validateToken({ token }) {
+    async validateToken({ idToken }) {
         const isValid = await this.tokenRepository.validate({ idToken });
+        
         return isValid;
     }
 }

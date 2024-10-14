@@ -5,7 +5,6 @@ export class TokenController {
 
     // Inyectar el repositorio de MySQL
     constructor(TokenRepository) {
-        console.log(TokenRepository);
         this.tokenService = new TokenService(TokenRepository);
         
     }
@@ -18,13 +17,18 @@ export class TokenController {
 
     // Guardar un token
     validate = async (request, h) => {
-        const validationResult = validatePartialToken(request.params)
+        // Extrae el idToken de los parámetros de la ruta
+        const { id } = request.params;
+
+        // Valida el idToken utilizando el esquema
+        const validationResult = validatePartialToken({ tokenValue: id });
 
         if (validationResult.error) {
+            console.log(validationResult.error);
             return h.response({ error: 'Invalid parameters.' }).code(400);
         }
 
-        const { id } = validationResult.data
+        // Pasa el idToken validado al servicio para la validación
         const isValid = await this.tokenService.validateToken({ idToken: id });
 
         return h.response({ 'Valid token': isValid });
