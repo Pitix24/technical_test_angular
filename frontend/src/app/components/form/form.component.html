@@ -1,0 +1,94 @@
+<div
+  class="container d-flex flex-column justify-content-center align-items-center"
+>
+  <h1>Sign Up</h1>
+
+  <form
+    [formGroup]="signUpForm"
+    class="row g-2 d-flex justify-content-center needs-validation"
+    novalidate
+    (submit)="submit($event)"
+  >
+    <div class="mb-3 d-flex justify-content-center">
+      <div>
+        <input
+          id="token"
+          type="text"
+          class="form-control text-center"
+          formControlName="token"
+          [ngClass]="{
+            'is-invalid':
+              hasErrors('token', 'required') ||
+              hasErrors('token', 'minlength') ||
+              hasErrors('token', 'maxlength')
+          }"
+        />
+        @if (hasErrors('token', 'required')) {
+        <span class="text-danger">You have to complete this field</span>
+        } @else if (hasErrors('token', 'minlength')|| hasErrors('token',
+        'maxlength')) {
+        <span class="text-danger">You have to write up to 8 characters.</span>
+        }
+      </div>
+    </div>
+    
+    <div class="mb-3">
+      <label for="first_name" class="form-label">First Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="first_name"
+        formControlName="first_name"
+        [ngClass]="{ 'is-invalid': hasErrors('first_name', 'required') }"
+      />
+      <span *ngIf="hasErrors('first_name', 'required')" class="text-danger">
+        You have to complete this field
+      </span>
+    </div>
+
+    <div class="mb-3">
+      <label for="last_name" class="form-label">Last Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="last_name"
+        formControlName="last_name"
+        [ngClass]="{ 'is-invalid': hasErrors('last_name', 'required') }"
+      />
+      <span *ngIf="hasErrors('last_name', 'required')" class="text-danger">
+        You have to complete this field
+      </span>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        placeholder="name@example.com"
+        formControlName="email"
+        [ngClass]="{
+          'is-invalid':
+            hasErrors('email', 'required') || hasErrors('email', 'email')
+        }"
+      />
+      <span *ngIf="hasErrors('email', 'required')" class="text-danger">
+        You have to complete this field
+      </span>
+      <span *ngIf="hasErrors('email', 'email')" class="text-danger">
+        Invalid email format
+      </span>
+    </div>
+
+    <div class="mb-3 text-center">
+      <button
+        class="btn btn-primary"
+        [disabled]="signUpForm.invalid"
+        type="submit"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
