@@ -16,8 +16,14 @@ MySQL
 ## INITIALIZE THE PROJECT
 1. Previously download the Packages required for each Microservice
 2. Enter the Backend folder and go to the microservice-security directory
-3. Run npm run dev to start the server
-4. Move to the microservice-email directory
-5. Run npm run dev to start the server
-6. Move to the microservice-client directory
+3. Run npm install
+4. Run npm run dev to start the server
+5. Move to the microservice-email directory
+6. Run npm install
 7. Run npm run dev to start the server
+8. Move to the microservice-client directory
+9. Run npm install
+10. Run npm run dev to start the server
+11. Now, exit from Backend and move to Frontend
+12. Run npm install
+13. Run ng serve
